@@ -1,4 +1,15 @@
 {
+  "0011": {"nome": "PA RIBEIRÃO PRETO", "cidade": "RIBEIRÃO PRETO"},
+  "0037": {"nome": "PA CAMPINAS CAMBUI", "cidade": "CAMPINAS"},
+  "0069": {"nome": "PA EXEMPLO", "cidade": "SÃO PAULO"},
+  "0189": {"nome": "PA CAMPINAS PROENÇA", "cidade": "CAMPINAS"},
+  "0199": {"nome": "PA JUNDIAÍ", "cidade": "JUNDIAÍ"},
+  "0223": {"nome": "PA SOROCABA", "cidade": "SOROCABA"},
+  "0237": {"nome": "PA PIRACICABA", "cidade": "PIRACICABA"},
+  "0269": {"nome": "PA AMERICANA", "cidade": "AMERICANA"},
+  "0324": {"nome": "PA MOGI MIRIM", "cidade": "MOGI MIRIM"}
+  // ... aqui seguem todas as demais lojas que constam na planilha ...
+}{
   "0001": {
     "nome": "PA JARDIM PAULISTA",
     "cidade": "SAO PAULO"
