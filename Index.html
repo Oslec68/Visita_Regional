@@ -1,596 +1,87 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural Hacker Terminal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap');
-        
-        body {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6, #3b82f6, #1e1b4b);
-            min-height: 100vh;
-            color: white;
-            font-family: 'Fira Code', monospace;
-            margin: 0;
-            padding: 0;
-        }
-
-        .status-bar {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 8px 20px;
-            font-size: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .main-container {
-            padding: 20px;
-            max-width: 100%;
-        }
-
-        .card {
-            background: rgba(30, 27, 75, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(99, 102, 241, 0.3);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .progress-container {
-            margin: 15px 0;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: between;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #e5e7eb;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 12px;
-            background: rgba(55, 65, 81, 0.8);
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-quantum {
-            height: 100%;
-            background: linear-gradient(90deg, #06b6d4, #8b5cf6);
-            border-radius: 20px;
-            transition: width 0.8s ease;
-            position: relative;
-        }
-
-        .progress-chaos {
-            height: 100%;
-            background: linear-gradient(90deg, #f97316, #ef4444);
-            border-radius: 20px;
-            transition: width 0.8s ease;
-            position: relative;
-        }
-
-        .progress-virus {
-            height: 100%;
-            background: linear-gradient(90deg, #10b981, #059669);
-            border-radius: 20px;
-            transition: width 0.8s ease;
-            position: relative;
-        }
-
-        .progress-extraction {
-            height: 100%;
-            background: linear-gradient(90deg, #fbbf24, #f59e0b);
-            border-radius: 20px;
-            transition: width 0.8s ease;
-            position: relative;
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shine 2s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .hack-button {
-            width: 100%;
-            background: linear-gradient(45deg, #8b5cf6, #06b6d4);
-            border: none;
-            color: white;
-            padding: 16px 24px;
-            font-family: 'Fira Code', monospace;
-            font-weight: bold;
-            font-size: 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .hack-button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
-        }
-
-        .hack-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .metric-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
-        }
-
-        .metric-value {
-            font-weight: bold;
-            font-family: 'Fira Code', monospace;
-        }
-
-        .status-processing {
-            color: #06b6d4;
-            animation: pulse 1.5s infinite;
-        }
-
-        .status-success {
-            color: #10b981;
-        }
-
-        .status-warning {
-            color: #f59e0b;
-        }
-
-        .status-error {
-            color: #ef4444;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .terminal-text {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 12px;
-            line-height: 1.4;
-            margin: 10px 0;
-            border-left: 4px solid #06b6d4;
-        }
-
-        .glitch-text {
-            animation: glitch 0.5s infinite;
-        }
-
-        @keyframes glitch {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-2px); }
-            75% { transform: translateX(2px); }
-        }
-
-        .neural-icon {
-            font-size: 24px;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Visita Lojas GPA</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Status Bar -->
-    <div class="status-bar">
-        <div style="display: flex; align-items: center; gap: 8px;">
-            <span>22:24</span>
-            <span>🔒</span>
-            <span>☁️</span>
-            <span>📷</span>
-        </div>
-        <div style="display: flex; align-items: center; gap: 8px;">
-            <span>📶</span>
-            <span>4G</span>
-            <span>📶</span>
-            <span style="background: #ef4444; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">13</span>
-        </div>
+
+<header>
+ <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/GPA_logo_2013.svg" alt="GPA">
+ <h1>Visita Lojas GPA</h1>
+ <small id="clock"></small>
+</header>
+
+<form id="f" onsubmit="event.preventDefault();send()">
+<section>
+  <div class="row">
+    <div class="cod">
+      <label>Código</label>
+      <input id="cod" maxlength="4" oninput="fill()">
     </div>
-
-    <!-- Header -->
-    <div class="text-center py-6">
-        <h1 class="text-5xl font-black mb-3" style="
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000;
-            color: #ff0000;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        ">
-            NEURAL 💀 HACKER
-        </h1>
-        <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-2" style="
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            text-shadow: 0 0 5px #ff4444;
-            letter-spacing: 2px;
-        ">
-            ⚡ TERMINAL Q-X ⚡
-        </h2>
-        <p class="text-red-400 text-lg mt-2 font-bold" style="
-            text-shadow: 0 0 5px #ff0000;
-            font-family: 'Courier New', monospace;
-        ">
-            🔥 SISTEMA DE INFILTRAÇÃO NEURAL 🔥<br>
-            STATUS: <span id="hack-status" class="status-processing">INFILTRANDO</span>
-        </p>
+    <div class="nome">
+      <label>Nome da Loja</label>
+      <input id="nome" readonly>
     </div>
+  </div>
+  <div style="margin-top:12px">
+    <label>Cidade</label>
+    <input id="cid" readonly>
+  </div>
+</section>
 
-    <!-- Main Container -->
-    <div class="main-container">
-        
-        <!-- Controle de Infiltração -->
-        <div class="card">
-            <div class="card-header">
-                <span class="neural-icon">🧠</span>
-                <span>Controle Neural</span>
-            </div>
-            
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span>💀 Leitura de Arquivos</span>
-                    <span id="file-read-percent">0%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-quantum progress-fill" id="file-read-progress" style="width: 0%"></div>
-                </div>
-            </div>
+<section>
+  <div class="row">
+    <div><label>Gerente</label><input id="gerente"></div>
+    <div><label>WhatsApp</label><input id="whats"></div>
+  </div>
+</section>
 
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span>💻 Bypass de Firewall</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-chaos progress-fill" id="chaos-progress" style="width: 45%"></div>
-                </div>
-            </div>
-
-            <button class="hack-button" onclick="hackMatrix()" id="hack-btn">
-                ⚡ Hackear Matriz
-            </button>
-        </div>
-
-        <!-- Métricas de Infiltração -->
-        <div class="card">
-            <div class="card-header">
-                <span class="neural-icon">📊</span>
-                <span>Métricas Neural</span>
-            </div>
-            
-            <div class="metric-item">
-                <span>Latência Neural:</span>
-                <span class="metric-value status-success" id="latency">0.12 ms</span>
-            </div>
-            <div class="metric-item">
-                <span>Conexões Ativas:</span>
-                <span class="metric-value status-processing" id="entanglement">1,337</span>
-            </div>
-            <div class="metric-item">
-                <span>Força de Ataque:</span>
-                <span class="metric-value status-warning" id="coherence">89.2%</span>
-            </div>
-            <div class="metric-item">
-                <span>Sistemas Infiltrados:</span>
-                <span class="metric-value status-success" id="systems">42</span>
-            </div>
-        </div>
-
-        <!-- Estado dos Arquivos -->
-        <div class="card">
-            <div class="card-header">
-                <span class="neural-icon">📂</span>
-                <span>Estado dos Arquivos</span>
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span>🔥 Extração Rápida</span>
-                    <span id="extraction-percent">0%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-extraction progress-fill" id="extraction-progress" style="width: 0%"></div>
-                </div>
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span>💥 Invasão de Sistema</span>
-                    <span id="chaos-percent">23%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-chaos progress-fill" id="chaos-system-progress" style="width: 23%"></div>
-                </div>
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-label">
-                    <span>🛡️ Desligamento Antivírus</span>
-                    <span id="antivirus-percent">0%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-virus progress-fill" id="antivirus-progress" style="width: 0%"></div>
-                </div>
-            </div>
-
-            <button class="hack-button" onclick="extractData()" id="extract-btn">
-                ⚡ Iniciar Extração Rápida
-            </button>
-            
-            <button class="hack-button" onclick="disableAntivirus()" id="antivirus-btn">
-                🛡️ Desligar Antivírus
-            </button>
-            
-            <button class="hack-button" onclick="causeInvasion()" id="chaos-btn">
-                💥 Iniciar Invasão
-            </button>
-        </div>
-
-        <!-- Terminal de Comando -->
-        <div class="card">
-            <div class="card-header">
-                <span class="neural-icon">💻</span>
-                <span>Terminal Neural</span>
-            </div>
-            
-            <div class="terminal-text" id="terminal-output">
-                [SISTEMA NEURAL ONLINE]<br>
-                Conectando ao mainframe...<br>
-                <span class="status-success">✓ Acesso root obtido</span><br>
-                <span class="status-warning">⚠ Firewall detectado</span><br>
-                Aguardando comandos...
-            </div>
-        </div>
-
+<section>
+  <div class="row" style="align-items:flex-end">
+    <div style="flex:1"><label>Usuário</label><input id="usuario"></div>
+    <div style="flex:0 0 160px">
+      <button type="button" class="chk-btn" onclick="toggle()">📋 Checklist <span id="badge">(0)</span></button>
     </div>
+  </div>
+</section>
 
-    <script>
-        let isHacking = false;
-        let extractionRunning = false;
-        let virusDeploying = false;
+<div id="checklistSec">
+  <section>
+    <div class="chk-group" id="lista">
+      <label><input type="checkbox" value="Ruptura" onchange="badge()">Ruptura</label>
+      <label><input type="checkbox" value="Preço errado" onchange="badge()">Preço errado</label>
+      <label><input type="checkbox" value="Layout inadequado" onchange="badge()">Layout inadequado</label>
+      <label><input type="checkbox" value="Limpeza" onchange="badge()">Limpeza</label>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <input id="novo" placeholder="Outro item">
+      <button type="button" class="chk-btn" style="flex:0 0 90px" onclick="add()">+Add</button>
+    </div>
+  </section>
+</div>
 
-        // Animação dos valores
-        function animateProgress(elementId, targetWidth, duration = 2000) {
-            const element = document.getElementById(elementId);
-            const startWidth = parseInt(element.style.width) || 0;
-            const diff = targetWidth - startWidth;
-            const steps = 60;
-            const stepSize = diff / steps;
-            let current = startWidth;
-            
-            const timer = setInterval(() => {
-                current += stepSize;
-                if ((stepSize > 0 && current >= targetWidth) || (stepSize < 0 && current <= targetWidth)) {
-                    current = targetWidth;
-                    clearInterval(timer);
-                }
-                element.style.width = current + '%';
-                
-                // Atualiza texto da porcentagem se existir
-                const percentElement = document.getElementById(elementId.replace('-progress', '-percent'));
-                if (percentElement) {
-                    percentElement.textContent = Math.floor(current) + '%';
-                }
-            }, duration / steps);
-        }
+<section>
+  <label>Observações</label>
+  <textarea id="obs" placeholder="🎤 Use o microfone do teclado"></textarea>
+</section>
 
-        // Adicionar ao terminal
-        function addTerminalLine(text, className = '') {
-            const terminal = document.getElementById('terminal-output');
-            terminal.innerHTML += '<br>' + text;
-            terminal.scrollTop = terminal.scrollHeight;
-        }
+<section>
+  <label>Fotos</label>
+  <input type="file" id="fotos" accept="image/*" multiple>
+</section>
 
-        // Hack da Matriz
-        function hackMatrix() {
-            if (isHacking) return;
-            isHacking = true;
-            
-            const btn = document.getElementById('hack-btn');
-            btn.disabled = true;
-            btn.innerHTML = '⚡ Colapsando Qubits...';
-            btn.classList.add('glitch-text');
-            
-            addTerminalLine('<span class="status-processing">🚀 Iniciando hack da matriz neural...</span>');
-            
-            // Anima as barras
-            setTimeout(() => {
-                animateProgress('quantum-progress', Math.random() * 40 + 60);
-                animateProgress('chaos-progress', Math.random() * 60 + 20);
-                addTerminalLine('<span class="status-warning">⚡ Distorcendo realidade quântica...</span>');
-            }, 500);
-            
-            setTimeout(() => {
-                addTerminalLine('<span class="status-success">✅ Matriz hackeada com sucesso!</span>');
-                document.getElementById('systems').textContent = parseInt(document.getElementById('systems').textContent) + Math.floor(Math.random() * 5) + 1;
-                
-                btn.disabled = false;
-                btn.innerHTML = '⚡ Hackear Matriz';
-                btn.classList.remove('glitch-text');
-                isHacking = false;
-            }, 3000);
-        }
+<div id="status"></div>
 
-        // Extração Rápida
-        function extractData() {
-            if (extractionRunning) return;
-            extractionRunning = true;
-            
-            const btn = document.getElementById('extract-btn');
-            btn.disabled = true;
-            btn.innerHTML = '⚡ Extraindo...';
-            
-            addTerminalLine('<span class="status-processing">🔥 Iniciando extração RÁPIDA de arquivos...</span>');
-            
-            // Progresso da extração RÁPIDA
-            let progress = 0;
-            const extractTimer = setInterval(() => {
-                progress += Math.random() * 25 + 15; // Mais rápido
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(extractTimer);
-                    
-                    addTerminalLine('<span class="status-success">💾 EXTRAÇÃO COMPLETA: 2.4TB de arquivos obtidos!</span>');
-                    btn.disabled = false;
-                    btn.innerHTML = '⚡ Iniciar Extração Rápida';
-                    extractionRunning = false;
-                }
-                
-                animateProgress('extraction-progress', progress, 200);
-            }, 300); // Mais rápido
-        }
+<footer>
+  <button type="button" class="limpar" onclick="f.reset();badge();">Limpar</button>
+  <button class="finalizar">Finalizar</button>
+</footer>
+</form>
 
-        // Desligar Antivírus
-        function disableAntivirus() {
-            const btn = document.getElementById('antivirus-btn');
-            btn.disabled = true;
-            btn.innerHTML = '🛡️ Desligando...';
-            
-            addTerminalLine('<span class="status-warning">🛡️ Atacando sistema antivírus...</span>');
-            
-            let progress = 0;
-            const antivirusTimer = setInterval(() => {
-                progress += Math.random() * 20 + 10;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(antivirusTimer);
-                    
-                    addTerminalLine('<span class="status-error">💀 ANTIVÍRUS NEUTRALIZADO! Sistema desprotegido!</span>');
-                    btn.disabled = false;
-                    btn.innerHTML = '🛡️ Desligar Antivírus';
-                }
-                
-                animateProgress('antivirus-progress', progress, 400);
-            }, 500);
-        }
-
-        // Causar Invasão
-        function causeInvasion() {
-            const btn = document.getElementById('chaos-btn');
-            btn.disabled = true;
-            btn.innerHTML = '💥 Invadindo...';
-            
-            addTerminalLine('<span class="status-error">💥 Iniciando INVASÃO total do sistema...</span>');
-            
-            // Incrementa invasão rapidamente
-            let currentChaos = parseInt(document.getElementById('chaos-percent').textContent);
-            const chaosTimer = setInterval(() => {
-                currentChaos += Math.random() * 15 + 8;
-                if (currentChaos >= 100) {
-                    currentChaos = 100;
-                    clearInterval(chaosTimer);
-                    
-                    addTerminalLine('<span class="status-error glitch-text">🔥 INVASÃO COMPLETA! ACESSO ROOT OBTIDO!</span>');
-                    btn.disabled = false;
-                    btn.innerHTML = '💥 Iniciar Invasão';
-                }
-                
-                animateProgress('chaos-system-progress', currentChaos, 300);
-                document.getElementById('chaos-percent').textContent = Math.floor(currentChaos) + '%';
-            }, 400);
-        }
-
-        // Leitura de Arquivos RÁPIDA
-        function startFileReading() {
-            let progress = 0;
-            const fileTimer = setInterval(() => {
-                progress += Math.random() * 30 + 20; // MUITO RÁPIDO
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(fileTimer);
-                    addTerminalLine('<span class="status-success">📂 TODOS OS ARQUIVOS LIDOS! 5,847 arquivos processados!</span>');
-                    setTimeout(() => {
-                        progress = 0;
-                        document.getElementById('file-read-percent').textContent = '0%';
-                        document.getElementById('file-read-progress').style.width = '0%';
-                        startFileReading(); // Reinicia automaticamente
-                    }, 2000);
-                }
-                
-                animateProgress('file-read-progress', progress, 200);
-                document.getElementById('file-read-percent').textContent = Math.floor(progress) + '%';
-            }, 300);
-        }
-
-        // Animações automáticas
-        setInterval(() => {
-            // Varia bypass de firewall
-            const newChaos = Math.random() * 40 + 20;
-            animateProgress('chaos-progress', newChaos, 1000);
-            
-            // Atualiza métricas
-            document.getElementById('entanglement').textContent = Math.floor(Math.random() * 500 + 1000);
-            document.getElementById('coherence').textContent = (Math.random() * 15 + 80).toFixed(1) + '%';
-            
-        }, 3000);
-
-        // Inicia leitura de arquivos automática
-        setTimeout(() => {
-            startFileReading();
-        }, 1000);
-
-        // Status do hack
-        setInterval(() => {
-            const status = document.getElementById('hack-status');
-            const statuses = [
-                { text: 'INFILTRANDO', class: 'status-processing' },
-                { text: 'STEALTH MODE', class: 'status-success' },
-                { text: 'DEEP WEB', class: 'status-warning' },
-                { text: 'NEURAL SYNC', class: 'status-processing' }
-            ];
-            const random = statuses[Math.floor(Math.random() * statuses.length)];
-            status.textContent = random.text;
-            status.className = random.class;
-        }, 4000);
-
-        // Log automático
-        setInterval(() => {
-            if (Math.random() > 0.7) {
-                const logs = [
-                    '<span class="status-success">✓ Nova conexão neural estabelecida</span>',
-                    '<span class="status-warning">⚠ Tentativa de rastreamento detectada</span>',
-                    '<span class="status-processing">🔍 Escaneando vulnerabilidades...</span>',
-                    '<span class="status-success">✓ Backdoor instalado com sucesso</span>',
-                    '<span class="status-error">💀 Sistema de monitoramento neutralizado</span>'
-                ];
-                addTerminalLine(logs[Math.floor(Math.random() * logs.length)]);
-            }
-        }, 5000);
-    </script>
+<script src="data/lojas.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
